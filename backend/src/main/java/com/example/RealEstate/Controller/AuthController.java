@@ -32,13 +32,15 @@ public class AuthController {
         }
 
         User savedUser = userService.registerUser(request);
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(savedUser.getEmail());
+        String token = jwtUtil.generateToken(userDetails);
 
         AuthResponse response = new AuthResponse(
                 "User registered successfully",
                 savedUser.getUserId(),
                 savedUser.getEmail(),
                 savedUser.getRole().name(),
-                null
+                token
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
