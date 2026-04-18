@@ -1,0 +1,210 @@
+/* Full page center */
+.payment-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f4f6f9;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main box */
+.payment-box {
+  width: 400px;
+  max-width: 95%;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.payment-box h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Property details */
+.property-details {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+/* Payment type (Deposit / Rent) */
+.payment-type {
+  margin-bottom: 15px;
+}
+
+.payment-type label {
+  display: block;
+  margin: 5px 0;
+}
+
+/* Amount */
+.payment-box h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #007bff;
+}
+
+/* Payment method */
+.payment-method {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+/* Form */
+.payment-form input,
+.payment-form select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Row for card */
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.row input {
+  width: 50%;
+}
+
+/* Button */
+.pay-btn {
+  width: 100%;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.pay-btn:hover {
+  background: #218838;
+}
+
+/* OTP box */
+.otp-box {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.otp-box input {
+  flex: 1;
+  padding: 8px;
+}
+
+.otp-box button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.otp-box button:hover {
+  background: #0056b3;
+}
+
+/* Status */
+.status {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.status.completed {
+  color: green;
+}
+
+.status.failed {
+  color: red;
+}
+
+.status.refunded {
+  color: orange;
+}
+
+.status.pending {
+  color: gray;
+}
+
+/* Transaction */
+.payment-box p {
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* History button */
+.payment-box button:last-child {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: #343a40;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.payment-box button:last-child:hover {
+  background: #23272b;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-hint {
+  display: block;
+  font-size: 12px;
+  color: red;
+  margin-bottom: 8px;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.payment-form small {
+  color: red !important;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
+}

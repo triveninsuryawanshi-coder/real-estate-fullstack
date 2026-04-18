@@ -1,0 +1,40 @@
+/* PAGE */
+.privacy-container {
+  padding: 40px;
+  background-color: #f6f6f7;
+  min-height: 80vh;
+}
+
+/* BOX */
+.privacy-box {
+  max-width: 900px;
+  margin: auto;
+  background: rgb(218, 234, 250);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* TITLE */
+.privacy-title {
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* TEXT */
+.privacy-box p {
+  color: #555;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+/* HEADINGS */
+.privacy-box h3 {
+  margin-top: 20px;
+}
+
+/* LIST */
+.privacy-box ul {
+  margin-left: 20px;
+}

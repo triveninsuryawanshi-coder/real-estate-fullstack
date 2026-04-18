@@ -1,0 +1,97 @@
+/* CONTAINER */
+.about-container {
+  display: flex;
+  min-height: 80vh;
+  background-color: #f5f6f8;
+}
+
+/* SIDEBAR */
+.about-sidebar {
+  width: 240px;
+  background: white;
+  padding: 20px;
+  border-right: 1px solid #eee;
+}
+
+.about-sidebar ul {
+  list-style: none;
+}
+
+.about-sidebar li {
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: 0.2s;
+}
+
+.about-sidebar li:hover {
+  background: #f3f4f6;
+}
+
+.about-sidebar .active {
+  background: #2563eb;
+  color: white;
+  font-weight: 500;
+}
+
+/* CONTENT AREA */
+.about-content {
+  flex: 1;
+  padding: 40px;
+}
+
+/* CONTENT BOX */
+.about-content-box {
+  background: rgb(218, 234, 250);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* TITLES */
+.about-title,
+.contact-title {
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* TEXT */
+.about-content p {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+/* HEADINGS */
+.about-content h3 {
+  margin-top: 20px;
+  color: #222;
+}
+
+/* CONTACT ROW */
+.contact-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* LABEL */
+.label {
+  color: #444;
+  font-size: 16px;
+}
+
+/* VALUE */
+.value {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.value:hover {
+  text-decoration: underline;
+}

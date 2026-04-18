@@ -1,0 +1,171 @@
+.dashboard {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 🔷 HERO */
+.hero {
+  width: 100%;
+  text-align: center;
+  padding: 80px 20px;
+  background: rgb(247, 247, 247);
+  color: rgb(13, 13, 13);
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* 🔷 TABS */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 20px;
+}
+
+/* Tab text */
+.tabs span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #585757;
+  cursor: pointer;
+  position: relative;
+  padding: 5px 0;
+  transition: color 0.3s;
+}
+
+/* Hover effect */
+.tabs span:hover {
+  color: #f20e15;
+}
+
+/* Underline (hidden initially) */
+.tabs span::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: #f20e15;
+  left: 0;
+  bottom: -3px;
+  transition: width 0.1s;
+}
+
+/* Show underline on hover */
+.tabs span:hover::after {
+  width: 100%;
+}
+
+/* Active tab */
+.tabs span.active {
+  color: #f20e15;
+}
+
+/* Keep underline for active tab */
+.tabs span.active::after {
+  width: 100%;
+}
+/* 🔷 SEARCH */
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.search-box select {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 200px;
+}
+
+.search-box button {
+  padding: 10px 20px;
+  background: #3f65fa;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-box button:disabled {
+  background: rgb(89, 152, 252);
+  cursor: pointer;
+}
+
+/* 🔷 INFO SECTION */
+.info-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 60px;
+  gap: 20px;
+  background: white;
+}
+
+.info-card {
+  flex: 1;
+  text-align: center;
+  padding: 25px;
+  border-radius: 10px;
+  background: rgb(247, 247, 247);
+  transition: 0.3s;
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔷 MOTIVATION */
+.motivation {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.motivation h2 {
+  margin-bottom: 15px;
+}
+
+/* 🔷 FOOTER */
+.footer {
+  background: #222;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.footer-links {
+  margin-bottom: 15px;
+}
+
+.footer-links span {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.footer-links span:hover {
+  text-decoration: underline;
+}
+
+.footer-social {
+  margin-top: 10px;
+}
+
+.footer-social a {
+  margin: 0 10px;
+  color: #9ca3af;
+  text-decoration: none;
+}
+
+.footer-social a:hover {
+  color: white;
+}

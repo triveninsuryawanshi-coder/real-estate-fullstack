@@ -1,0 +1,245 @@
+/* Page layout */
+.properties-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2c3e50;
+  color: white;
+  padding: 15px 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.navbar-filters {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-filters select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+/* Main content */
+.main-content {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 60px);
+}
+
+/* Sidebar */
+.sidebar {
+  flex: 0 0 380px;
+  background-color: #fff;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+}
+
+/* Filter groups */
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group h4 {
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: #444;
+}
+.radio-group {
+  display: flex;
+  gap: 30px;
+  padding-left: 20px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* space between circle and text */
+}
+.filter-item {
+  margin-bottom: 10px;
+}
+
+.filter-item label {
+  font-size: 15px;
+  padding-left: 5px;
+  display: block;
+  margin-bottom: 3px;
+  color: #3e3e3e;
+}
+
+.filter-item select,
+.filter-item input {
+  width: 90%;
+  padding: 5px;
+  font-size: 13px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Property Cards */
+
+.property-cards {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+.properties-page {
+  height: 100vh;
+}
+
+/* Card */
+
+.card-horizontal {
+  display: flex;
+  width: 100%;
+  min-height: 220px;
+  background: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transition: 0.3s;
+}
+
+/* IMAGE LEFT */
+.card-img {
+  width: 35%;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CONTENT RIGHT */
+.card-info {
+  width: 65%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Hover effect */
+.card-horizontal:hover {
+  transform: translateY(-4px);
+}
+
+/* Title */
+.card h3 {
+  font-size: 17px;
+  color: #333;
+}
+
+/* Text */
+.card p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Price */
+.price {
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Button */
+.details-btn {
+  margin-top: auto;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+}
+
+.details-btn:hover {
+  background-color: #2563eb;
+}
+
+/* No data */
+.no-data {
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+}
+/* IMAGE SECTION */
+
+/* CONTENT WRAPPER */
+
+.card-content {
+  width: 60%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.location {
+  font-size: 14px;
+  color: #666;
+}
+
+.extra {
+  font-size: 13px;
+  color: #777;
+}
+
+/* TYPE TEXT */
+.type {
+  color: #777;
+}
+/* Scrollbars */
+.sidebar::-webkit-scrollbar,
+.property-cards::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.property-cards::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .property-cards {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
