@@ -1,0 +1,24 @@
+package com.example.RealEstate.config;
+
+import com.example.RealEstate.Service.FileStorageService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import java.nio.file.Paths;
+@Configuration
+//@RequiredArgsConstructor
+public class FileUploadConfig implements WebMvcConfigurer {
+
+   // private final FileStorageService fileStorageService;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String uploadPath = Paths.get(System.getProperty("user.dir"), "uploads")
+                .toAbsolutePath()
+                .toString();
+
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + uploadPath + "/");
+    }
+}
