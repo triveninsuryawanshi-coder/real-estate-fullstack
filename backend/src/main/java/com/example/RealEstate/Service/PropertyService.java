@@ -20,6 +20,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -102,6 +103,7 @@ public class PropertyService {
                 .toList();
     }
 
+    @Transactional
     public PropertyResponseDTO createProperty(PropertyDTO dto) {
         User authenticatedUser = getAuthenticatedUser();
         validateOwnerAccess(dto.getOwnerId(), authenticatedUser, false);
@@ -121,6 +123,7 @@ public class PropertyService {
         return toResponseDto(savedProperty);
     }
 
+    @Transactional
     public PropertyResponseDTO updateProperty(Long id, PropertyDTO dto) {
         Property existingProperty = getPropertyEntityById(id);
         User authenticatedUser = getAuthenticatedUser();
@@ -138,12 +141,14 @@ public class PropertyService {
         return toResponseDto(savedProperty);
     }
 
+    @Transactional
     public PropertyResponseDTO updateStatus(Long id, String status) {
         Property property = getPropertyEntityById(id);
         property.setStatus(parseStatus(status));
         return toResponseDto(propertyRepository.save(property));
     }
 
+    @Transactional
     public void deleteProperty(Long id) {
         Property property = getPropertyEntityById(id);
         User authenticatedUser = getAuthenticatedUser();

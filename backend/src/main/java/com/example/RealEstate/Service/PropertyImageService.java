@@ -9,6 +9,7 @@ import com.example.RealEstate.Repository.PropertyImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class PropertyImageService {
     private final PropertyImageRepository propertyImageRepository;
     private final FileStorageService fileStorageService;
 
+    @Transactional
     public List<PropertyImageDTO> uploadPropertyImages(Property property, User authenticatedUser, MultipartFile[] files) {
         validateOwnerAccess(property, authenticatedUser);
 
@@ -50,6 +52,7 @@ public class PropertyImageService {
                 .toList();
     }
 
+    @Transactional
     public void deletePropertyImage(Property property, User authenticatedUser, Long imageId) {
         validateOwnerAccess(property, authenticatedUser);
 
@@ -71,6 +74,7 @@ public class PropertyImageService {
         }
     }
 
+    @Transactional
     public void syncPropertyImages(Property property, List<String> imageUrls) {
         deletePropertyImages(property);
 
@@ -97,6 +101,7 @@ public class PropertyImageService {
         }
     }
 
+    @Transactional
     public void deletePropertyImages(Property property) {
         List<PropertyImage> existingImages = propertyImageRepository.findByPropertyPropertyId(property.getPropertyId());
         for (PropertyImage image : existingImages) {
