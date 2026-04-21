@@ -3,6 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Properties.css";
 
+const getPropertyImageSrc = (property, index = 0) => {
+  const imageUrl = property.images?.[index]?.imageUrl;
+  return imageUrl
+    ? `http://localhost:8080${imageUrl}`
+    : `https://picsum.photos/300/200?random=${property.propertyId}`;
+};
+
 function Properties() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -279,11 +286,7 @@ function Properties() {
               <div key={property.propertyId} className="card-horizontal">
                 <div className="card-img">
                   <img
-                    src={
-                      property.imageUrls && property.imageUrls.length > 0
-                        ? property.imageUrls[0]
-                        : `https://picsum.photos/300/200?random=${property.propertyId}`
-                    }
+                    src={getPropertyImageSrc(property)}
                     alt="property"
                   />
                 </div>

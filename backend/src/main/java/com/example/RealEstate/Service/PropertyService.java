@@ -86,8 +86,24 @@ public class PropertyService {
                 .toList();
     }
 
+    public List<PropertyResponseDTO> getApprovedProperties() {
+        return propertyRepository.findAll()
+                .stream()
+                .filter(property -> property.getStatus() == PropertyStatus.APPROVED)
+                .map(this::toResponseDto)
+                .toList();
+    }
+
     public PropertyResponseDTO getPropertyById(Long id) {
         return toResponseDto(getPropertyEntityById(id));
+    }
+
+    public PropertyResponseDTO getApprovedPropertyById(Long id) {
+        Property property = getPropertyEntityById(id);
+        if (property.getStatus() != PropertyStatus.APPROVED) {
+            throw new ResourceNotFoundException("Property not found with id: " + id);
+        }
+        return toResponseDto(property);
     }
 
     public Property getPropertyEntityById(Long id) {
@@ -134,9 +150,12 @@ public class PropertyService {
         validateOwnerAssignment(existingProperty.getOwner().getUserId(), owner.getUserId(), authenticatedUser);
 
         mapToEntity(dto, existingProperty, owner);
+        existingProperty.setStatus(PropertyStatus.PENDING);
 
         Property savedProperty = propertyRepository.save(existingProperty);
-        propertyImageService.syncPropertyImages(savedProperty, dto.getImageUrls());
+        if (dto.getImageUrls() != null) {
+            propertyImageService.syncPropertyImages(savedProperty, dto.getImageUrls());
+        }
 
         return toResponseDto(savedProperty);
     }

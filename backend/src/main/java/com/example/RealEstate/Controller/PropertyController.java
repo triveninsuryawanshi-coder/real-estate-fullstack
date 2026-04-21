@@ -29,12 +29,12 @@ public class PropertyController {
 
     @GetMapping
     public ResponseEntity<List<PropertyResponseDTO>> getAll() {
-        return ResponseEntity.ok(propertyService.getAllProperties());
+        return ResponseEntity.ok(propertyService.getApprovedProperties());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PropertyResponseDTO> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(propertyService.getPropertyById(id));
+        return ResponseEntity.ok(propertyService.getApprovedPropertyById(id));
     }
 
     @PostMapping

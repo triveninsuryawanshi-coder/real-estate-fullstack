@@ -4,6 +4,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/PropertyDetails.css";
 
+const getPropertyImages = (property, id) =>
+  property?.images?.length
+    ? property.images.map((image) => `http://localhost:8080${image.imageUrl}`)
+    : [
+        `https://picsum.photos/800/400?random=${id}1`,
+        `https://picsum.photos/800/400?random=${id}2`,
+        `https://picsum.photos/800/400?random=${id}3`,
+      ];
+
 function PropertyDetail() {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
@@ -30,6 +39,8 @@ It offers comfortable living with nearby schools, hospitals, transport, and shop
   };
   if (!property) return <p className="loading">Loading...</p>;
 
+  const propertyImages = getPropertyImages(property, id);
+
   return (
     <div className="detail-container">
       {/* TITLE */}
@@ -38,14 +49,7 @@ It offers comfortable living with nearby schools, hospitals, transport, and shop
       <div className="image-section">
         {/* LEFT SIDE - THUMBNAILS */}
         <div className="thumbnail-list">
-          {(property.imageUrls?.length
-            ? property.imageUrls
-            : [
-                `https://picsum.photos/800/400?random=${id}1`,
-                `https://picsum.photos/800/400?random=${id}2`,
-                `https://picsum.photos/800/400?random=${id}3`,
-              ]
-          ).map((img, index) => (
+          {propertyImages.map((img, index) => (
             <img
               key={index}
               src={img}
@@ -59,11 +63,7 @@ It offers comfortable living with nearby schools, hospitals, transport, and shop
         {/* RIGHT SIDE - MAIN IMAGE */}
         <div className="main-image">
           <img
-            src={
-              property.imageUrls?.length
-                ? property.imageUrls[currentImage]
-                : `https://picsum.photos/800/400?random=${id}${currentImage}`
-            }
+            src={propertyImages[currentImage]}
             alt="property"
           />
         </div>

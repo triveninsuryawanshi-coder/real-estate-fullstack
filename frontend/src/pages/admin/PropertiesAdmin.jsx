@@ -22,10 +22,10 @@ function PropertiesAdmin() {
   };
 
   const updateStatus = async (id, status) => {
-    console.log("Clicked:", id, status); // debug
+    console.log("Clicked:", id, status);
 
     try {
-      await API.put(`/admin/properties/${id}/status`, { status });
+      await API.put(`/properties/${id}/status`, { status });
       loadProperties();
     } catch (err) {
       console.error("Update error:", err);
@@ -36,7 +36,7 @@ function PropertiesAdmin() {
     if (!window.confirm("Delete property?")) return;
 
     try {
-      await API.delete(`/admin/properties/${id}`);
+      await API.delete(`/properties/${id}`);
       loadProperties();
     } catch (err) {
       console.error("Delete error:", err);
@@ -45,7 +45,7 @@ function PropertiesAdmin() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>🏠 Property Management</h2>
+      <h2>Property Management</h2>
 
       {loading ? (
         <p>Loading...</p>
@@ -76,7 +76,6 @@ function PropertiesAdmin() {
                   <span style={statusStyle(p.status)}>{p.status}</span>
                 </td>
 
-                {/* 🔥 FIXED BUTTON SPACING */}
                 <td>
                   <div style={styles.actions}>
                     <button
@@ -112,8 +111,6 @@ function PropertiesAdmin() {
 
 export default PropertiesAdmin;
 
-/* 🎨 CLEAN SIMPLE STYLES */
-
 const styles = {
   actions: {
     display: "flex",
@@ -146,13 +143,17 @@ const styles = {
   },
 };
 
-/* STATUS COLOR */
-
 const statusStyle = (status) => ({
   padding: "4px 8px",
   borderRadius: "6px",
   color: "white",
   fontSize: "12px",
   background:
-    status === "AVAILABLE" ? "green" : status === "SOLD" ? "blue" : "orange",
+    status === "APPROVED"
+      ? "green"
+      : status === "REJECTED"
+        ? "red"
+        : status === "SOLD"
+          ? "blue"
+          : "orange",
 });

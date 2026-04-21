@@ -1,6 +1,7 @@
 package com.example.RealEstate.Specification;
 
 import com.example.RealEstate.Enum.ListingType;
+import com.example.RealEstate.Enum.PropertyStatus;
 import com.example.RealEstate.Enum.PropertyType;
 import com.example.RealEstate.Model.Property;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,7 +25,7 @@ public class PropertySpecification {
     ) {
         return (root, query, cb) -> {
 
-            var predicates = cb.conjunction();
+            var predicates = cb.equal(root.get("status"), PropertyStatus.APPROVED);
 
             if (city != null) {
                 predicates = cb.and(predicates,

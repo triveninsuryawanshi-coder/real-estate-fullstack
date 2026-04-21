@@ -74,7 +74,7 @@ function PostProperty() {
       price: parseFloat(formData.price),
       bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : null,
       bathrooms: formData.bathrooms ? parseInt(formData.bathrooms) : null,
-      status: "AVAILABLE",
+      status: editId ? "PENDING" : "PENDING",
     };
     let propertyId;
     let res;
