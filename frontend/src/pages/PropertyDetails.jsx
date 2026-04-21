@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../service/api";
 import "../styles/PropertyDetails.css";
 
 const getPropertyImages = (property, id) =>
@@ -17,18 +17,55 @@ function PropertyDetail() {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const [sendingEnquiry, setSendingEnquiry] = useState(false);
+  const [enquiryMessage, setEnquiryMessage] = useState("");
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [enquiryData, setEnquiryData] = useState({
+    buyerName: user.fullName || "",
+    buyerEmail: user.email || "",
+    buyerPhone: user.phone || "",
+    message: "",
+  });
 
   useEffect(() => {
     if (!id) return;
-    axios
-      .get(`http://localhost:8080/api/properties/${Number(id)}`)
+    API
+      .get(`/properties/${Number(id)}`)
       .then((res) => setProperty(res.data))
       .catch((err) => {
         console.error("Error:", err);
         setProperty(null);
       });
   }, [id]);
+
+  const handleEnquiryChange = (e) => {
+    setEnquiryData({ ...enquiryData, [e.target.name]: e.target.value });
+  };
+
+  const handleSendEnquiry = async (e) => {
+    e.preventDefault();
+    setSendingEnquiry(true);
+    setEnquiryMessage("");
+
+    try {
+      await API.post("/inquiries", {
+        propertyId: property.propertyId,
+        ...enquiryData,
+      });
+      setEnquiryMessage("Enquiry sent successfully.");
+      setEnquiryData((prev) => ({
+        ...prev,
+        message: "",
+      }));
+    } catch (error) {
+      console.error("Enquiry error:", error);
+      setEnquiryMessage("Failed to send enquiry.");
+    } finally {
+      setSendingEnquiry(false);
+    }
+  };
+
   const generateDescription = (property) => {
     if (!property) return "";
 
@@ -130,9 +167,63 @@ It offers comfortable living with nearby schools, hospitals, transport, and shop
             Pay Booking Amount
           </button>
         </div>
+
+        <div className="owner-section">
+          <h3>Send Enquiry</h3>
+          <form onSubmit={handleSendEnquiry}>
+            <input
+              type="text"
+              name="buyerName"
+              placeholder="Your Name"
+              value={enquiryData.buyerName}
+              onChange={handleEnquiryChange}
+              required
+              style={formInput}
+            />
+            <input
+              type="email"
+              name="buyerEmail"
+              placeholder="Your Email"
+              value={enquiryData.buyerEmail}
+              onChange={handleEnquiryChange}
+              required
+              style={formInput}
+            />
+            <input
+              type="text"
+              name="buyerPhone"
+              placeholder="Your Phone"
+              value={enquiryData.buyerPhone}
+              onChange={handleEnquiryChange}
+              style={formInput}
+            />
+            <textarea
+              name="message"
+              placeholder="Write your enquiry"
+              value={enquiryData.message}
+              onChange={handleEnquiryChange}
+              required
+              rows="4"
+              style={formInput}
+            />
+            <button type="submit" className="pay-btn" disabled={sendingEnquiry}>
+              {sendingEnquiry ? "Sending..." : "Mail Owner"}
+            </button>
+          </form>
+          {enquiryMessage ? <p>{enquiryMessage}</p> : null}
+        </div>
       </div>
     </div>
   );
 }
+
+const formInput = {
+  width: "100%",
+  padding: "10px",
+  marginBottom: "10px",
+  border: "1px solid #d1d5db",
+  borderRadius: "8px",
+  boxSizing: "border-box",
+};
 
 export default PropertyDetail;

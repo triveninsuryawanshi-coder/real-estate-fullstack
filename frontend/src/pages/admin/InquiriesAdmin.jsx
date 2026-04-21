@@ -12,12 +12,20 @@ function InquiriesAdmin() {
   const load = async () => {
     try {
       const res = await API.get("/admin/inquiries");
-      console.log("Inquiries:", res.data);
       setInquiries(res.data);
     } catch (err) {
       console.error("Error loading inquiries:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const updateStatus = async (id, status) => {
+    try {
+      await API.put(`/admin/inquiries/${id}/status`, { status });
+      load();
+    } catch (err) {
+      console.error("Status update error:", err);
     }
   };
 
@@ -33,45 +41,122 @@ function InquiriesAdmin() {
   };
 
   return (
-    <div>
-      <h2>📩 Inquiries</h2>
+    <div style={styles.container}>
+      <h2>Inquiries</h2>
 
       {loading ? (
         <p>Loading...</p>
       ) : inquiries.length === 0 ? (
         <p>No inquiries found</p>
       ) : (
-        inquiries.map((i) => (
-          <div key={i.id} style={card}>
-            <p>
-              <b>User:</b> {i.userEmail || "N/A"}
-            </p>
-            <p>{i.message}</p>
-
-            <button onClick={() => remove(i.id)} style={btn}>
-              Delete
-            </button>
-          </div>
-        ))
+        <table border="1" cellPadding="12" style={styles.table}>
+          <thead style={styles.head}>
+            <tr>
+              <th>ID</th>
+              <th>Property</th>
+              <th>Buyer Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Owner Email</th>
+              <th>Message</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {inquiries.map((inquiry) => (
+              <tr key={inquiry.enquiryId}>
+                <td>{inquiry.enquiryId}</td>
+                <td>{inquiry.propertyTitle}</td>
+                <td>{inquiry.buyerName}</td>
+                <td>{inquiry.buyerEmail}</td>
+                <td>{inquiry.buyerPhone || "N/A"}</td>
+                <td>{inquiry.ownerEmail}</td>
+                <td>{inquiry.message}</td>
+                <td>{new Date(inquiry.createdAt).toLocaleString()}</td>
+                <td>
+                  <span style={statusStyle(inquiry.status)}>{inquiry.status}</span>
+                </td>
+                <td>
+                  <div style={styles.actions}>
+                    <button
+                      style={styles.read}
+                      onClick={() => updateStatus(inquiry.enquiryId, "READ")}
+                    >
+                      Mark Read
+                    </button>
+                    <button
+                      style={styles.resolve}
+                      onClick={() =>
+                        updateStatus(inquiry.enquiryId, "RESOLVED")
+                      }
+                    >
+                      Resolve
+                    </button>
+                    <button
+                      style={styles.delete}
+                      onClick={() => remove(inquiry.enquiryId)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
 }
 
-const card = {
-  background: "white",
-  padding: "10px",
-  marginBottom: "10px",
-  borderRadius: "6px",
-  boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+const styles = {
+  container: {
+    padding: "20px",
+  },
+  table: {
+    width: "100%",
+    background: "white",
+  },
+  head: {
+    background: "#f3f4f6",
+  },
+  actions: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+  },
+  read: {
+    background: "#2563eb",
+    color: "white",
+    border: "none",
+    padding: "6px",
+    cursor: "pointer",
+  },
+  resolve: {
+    background: "#16a34a",
+    color: "white",
+    border: "none",
+    padding: "6px",
+    cursor: "pointer",
+  },
+  delete: {
+    background: "#dc2626",
+    color: "white",
+    border: "none",
+    padding: "6px",
+    cursor: "pointer",
+  },
 };
 
-const btn = {
-  background: "red",
+const statusStyle = (status) => ({
+  padding: "4px 8px",
+  borderRadius: "6px",
   color: "white",
-  border: "none",
-  padding: "5px 10px",
-  cursor: "pointer",
-};
+  fontSize: "12px",
+  background:
+    status === "NEW" ? "#f59e0b" : status === "READ" ? "#2563eb" : "#16a34a",
+});
 
 export default InquiriesAdmin;

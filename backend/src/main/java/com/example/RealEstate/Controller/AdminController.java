@@ -1,10 +1,12 @@
 package com.example.RealEstate.Controller;
 
 import com.example.RealEstate.Dto.AuthResponse;
+import com.example.RealEstate.Dto.EnquiryResponseDTO;
 import com.example.RealEstate.Dto.RegisterRequest;
 import com.example.RealEstate.Dto.PropertyResponseDTO;
 import com.example.RealEstate.Model.User;
 import com.example.RealEstate.Service.AdminService;
+import com.example.RealEstate.Service.EnquiryService;
 import com.example.RealEstate.Service.UserService;
 import com.example.RealEstate.Service.PropertyService;   // ✅ ADDED
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class AdminController {
     private final AdminService adminService;
     private final UserService userService;
     private final PropertyService propertyService;   // ✅ ADDED
+    private final EnquiryService enquiryService;
 
     // =========================
     // CREATE USER
@@ -80,5 +83,24 @@ public class AdminController {
     @GetMapping("/properties")
     public ResponseEntity<List<PropertyResponseDTO>> getAllProperties() {
         return ResponseEntity.ok(propertyService.getAllProperties());
+    }
+
+    @GetMapping("/inquiries")
+    public ResponseEntity<List<EnquiryResponseDTO>> getAllEnquiries() {
+        return ResponseEntity.ok(enquiryService.getAllEnquiries());
+    }
+
+    @PutMapping("/inquiries/{id}/status")
+    public ResponseEntity<EnquiryResponseDTO> updateEnquiryStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body
+    ) {
+        return ResponseEntity.ok(enquiryService.updateStatus(id, body.get("status")));
+    }
+
+    @DeleteMapping("/inquiries/{id}")
+    public ResponseEntity<String> deleteEnquiry(@PathVariable Long id) {
+        enquiryService.deleteEnquiry(id);
+        return ResponseEntity.ok("Enquiry deleted successfully");
     }
 }

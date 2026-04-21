@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/api/search")
@@ -21,7 +22,7 @@ public class SearchController {
     @GetMapping
     public ResponseEntity<Page<Property>> searchProperties(
             @RequestParam(required = false) String city,
-            @RequestParam(required = false) ListingType listingType,
+            @RequestParam(required = false) String listingType,
             @RequestParam(required = false) PropertyType type,
             @RequestParam(required = false) Integer bhk,
             @RequestParam(required = false) Integer bathrooms,
@@ -36,9 +37,10 @@ public class SearchController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
+        ListingType normalizedListingType = parseListingType(listingType);
         Page<Property> result = propertyService.searchProperties(
                 city,
-                listingType,
+                normalizedListingType,
                 type,
                 bhk,
                 bathrooms,
@@ -55,5 +57,18 @@ public class SearchController {
         );
 
         return ResponseEntity.ok(result);
+    }
+
+    private ListingType parseListingType(String listingType) {
+        if (listingType == null || listingType.isBlank()) {
+            return null;
+        }
+
+        String normalizedValue = listingType.trim().toUpperCase(Locale.ROOT);
+        if ("BUY".equals(normalizedValue)) {
+            return ListingType.SELL;
+        }
+
+        return ListingType.valueOf(normalizedValue);
     }
 }
