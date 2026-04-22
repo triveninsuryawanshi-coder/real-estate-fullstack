@@ -3,11 +3,41 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Properties.css";
 
+// Map properties to actual images from public folder
 const getPropertyImageSrc = (property, index = 0) => {
+  // First try to use backend images
   const imageUrl = property.images?.[index]?.imageUrl;
-  return imageUrl
-    ? `http://localhost:8080${imageUrl}`
-    : `https://picsum.photos/300/200?random=${property.propertyId}`;
+  if (imageUrl) {
+    return `http://localhost:8080${imageUrl}`;
+  }
+
+  // Fallback to local images from public folder based on property type
+  let imagePath = "";
+  
+  if (property.type === "LAND") {
+    // Use landmark images for land
+    const landmarkSets = ["land1", "land2", "land3", "land4", "land5", "land6"];
+    const landmarkIndex = (property.propertyId || 0) % landmarkSets.length;
+    imagePath = `/Images/Landmark/${landmarkSets[landmarkIndex]}/img${index + 1}.jpg`;
+  } else if (property.propertyType === "APARTMENT") {
+    // Use apartment images
+    const apartmentSets = ["A1", "A2", "A3", "A4", "A5", "A6"];
+    const apartmentIndex = (property.propertyId || 0) % apartmentSets.length;
+    imagePath = `/Images/Apartment/${apartmentSets[apartmentIndex]}/img${index + 1}.jpg`;
+  } else {
+    // Use BHK images (1BHK, 2BHK, 3BHK) with furnishing info
+    const bhkType = property.bhk ? `${property.bhk}BHK` : "2BHK";
+    const furnishing = property.furnishing || "NONE";
+    
+    let furnishingFolder = "unfurnish";
+    if (furnishing === "FULL") furnishingFolder = "Furnish";
+    else if (furnishing === "SEMI") furnishingFolder = "semi furnish";
+    
+    const setNumber = ((property.propertyId || 0) % 3) + 1;
+    imagePath = `/Images/${bhkType}/${furnishingFolder}/set${setNumber}/img${index + 1}.jpg`;
+  }
+
+  return imagePath;
 };
 
 function Properties() {
